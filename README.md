@@ -10,7 +10,7 @@
 
 - **STACK :**
 
-  - **SLICE DELIGHT** : `0.2.0`
+  - **SLICE DELIGHT** : `0.3.0`
   - **REACT** : `18.3.1`
 
 ---
