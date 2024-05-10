@@ -8,10 +8,17 @@
 
 ---
 
+- **URLS :**
+
+  - **Website : [Slice Delight](https://slice-delight.netlify.app)**
+
+---
+
 - **STACK :**
 
-  - **SLICE DELIGHT** : `0.3.0`
-  - **REACT** : `18.3.1`
+  - **Slice Delight** : `0.4.0`
+  - **React** : `18.3.1`
+  - **React Dom** : `18.3.1`
 
 ---
 
