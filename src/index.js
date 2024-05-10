@@ -52,11 +52,36 @@ const pizzaData = [
 function App() {
     return (
         <div>
-            <h1>SLICE DELIGHT v0.4.0</h1>
+            <Header />
+            <Menu />
+            <Footer />
+        </div>
+    )
+}
+
+function Header() {
+    return (
+        <h1>SLICE DELIGHT v0.5.0</h1>
+    )
+}
+
+function Menu() {
+    return (
+        <div>
+            <h2>Our menu</h2>
+            <Pizza />
+            <Pizza />
+            <Pizza />
             <Pizza />
             <Pizza />
             <Pizza />
         </div>
+    )
+}
+
+function Footer() {
+    return (
+        <footer>{new Date().toLocaleTimeString()}. We're currently open.</footer>
     )
 }
 
