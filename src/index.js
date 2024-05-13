@@ -61,7 +61,7 @@ function App() {
 
 function Header() {
     return (
-        <h1>SLICE DELIGHT v0.5.0</h1>
+        <h1>SLICE DELIGHT</h1>
     )
 }
 
@@ -80,8 +80,14 @@ function Menu() {
 }
 
 function Footer() {
+    const hour = new Date().getHours();
+    const openHour = 12;
+    const closeHour = 22;
+    const isOpen = hour >= openHour && hour <= closeHour;
+    const version = require('../package.json').version;
+
     return (
-        <footer>{new Date().toLocaleTimeString()}. We're currently open.</footer>
+        <footer>{hour} H. We're currently {isOpen ? "open" : "closed"}. Slice Delight v{version}</footer>
     )
 }
 
