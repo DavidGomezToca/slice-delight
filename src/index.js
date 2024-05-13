@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom/client";
+import "./index.css";
 
 // TODO: Solve Warning
 // eslint-disable-next-line no-unused-vars
@@ -51,7 +52,7 @@ const pizzaData = [
 
 function App() {
     return (
-        <div>
+        <div className="container">
             <Header />
             <Menu />
             <Footer />
@@ -61,13 +62,15 @@ function App() {
 
 function Header() {
     return (
-        <h1>SLICE DELIGHT</h1>
+        <header className="header">
+            <h1>SLICE DELIGHT</h1>
+        </header>
     )
 }
 
 function Menu() {
     return (
-        <div>
+        <main className="menu">
             <h2>Our menu</h2>
             <Pizza />
             <Pizza />
@@ -75,6 +78,16 @@ function Menu() {
             <Pizza />
             <Pizza />
             <Pizza />
+        </main>
+    )
+}
+
+function Pizza() {
+    return (
+        <div>
+            <img src="pizzas/spinaci.jpg" alt="Pizza Spinaci"></img>
+            <h3>Pizza Spinaci</h3>
+            <p>Tomato, mozarella, spinach, and ricotta cheese</p>
         </div>
     )
 }
@@ -87,17 +100,7 @@ function Footer() {
     const version = require('../package.json').version;
 
     return (
-        <footer>{hour} H. We're currently {isOpen ? "open" : "closed"}. Slice Delight v{version}</footer>
-    )
-}
-
-function Pizza() {
-    return (
-        <div>
-            <img src="pizzas/spinaci.jpg" alt="Pizza Spinaci"></img>
-            <h2>Pizza Spinaci</h2>
-            <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-        </div>
+        <footer className="footer">{hour} H. We're currently {isOpen ? "open" : "closed"}. Slice Delight v{version}</footer>
     )
 }
 
