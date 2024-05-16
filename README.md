@@ -16,7 +16,7 @@
 
 - **STACK :**
 
-  - **Slice Delight** : `0.7.0`
+  - **Slice Delight** : `0.8.0`
   - **React** : `18.3.1`
   - **React Dom** : `18.3.1`
 
