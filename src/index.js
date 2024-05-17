@@ -75,12 +75,15 @@ function Header() {
 }
 
 function Menu() {
+    const pizzas = pizzaData;
+    const numPizzas = pizzas.length;
+
     return (
         <main className="menu">
             <h2>Our menu</h2>
-            <ul className="pizzas">
-                {pizzaData.map(pizza => <Pizza pizza={pizza} key={pizza.id} />)}
-            </ul>
+            {numPizzas > 0 && <ul className="pizzas">
+                {pizzas.map(pizza => <Pizza pizza={pizza} key={pizza.id} />)}
+            </ul>};
         </main>
     );
 }
@@ -106,7 +109,12 @@ function Footer() {
     const version = require('../package.json').version;
 
     return (
-        <footer className="footer">{hour} H. We're currently {isOpen ? "open" : "closed"}. Slice Delight v{version}</footer>
+        <footer className="footer">
+            {isOpen && (<div className="order">
+                <p>We're open until {closeHour}:00. Come visit us or order online.</p>
+                <p className="versionWatermark">{version}</p>
+            </div>)}
+        </footer>
     );
 }
 
