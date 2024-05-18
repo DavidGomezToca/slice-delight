@@ -62,6 +62,7 @@ function App() {
             <Header />
             <Menu />
             <Footer />
+            <VerisonWatermark />
         </div>
     );
 }
@@ -106,16 +107,33 @@ function Footer() {
     const openHour = 12;
     const closeHour = 22;
     const isOpen = hour >= openHour && hour <= closeHour;
-    const version = require('../package.json').version;
 
     return (
         <footer className="footer">
-            {isOpen && (<div className="order">
-                <p>We're open until {closeHour}:00. Come visit us or order online.</p>
-                <p className="versionWatermark">{version}</p>
-            </div>)}
-        </footer>
+            {isOpen ?
+                (<Order closeHour={closeHour} />
+                ) : (
+                    <p>We're happy to welcome you between {openHour}:00 and {closeHour}:00.</p>
+                )
+            }
+        </footer >
     );
+}
+
+function Order(props) {
+    return (
+        <div className="order">
+            <p>We're open until {props.closeHour}:00. Come visit us or order online.</p>
+            <button className="btn">Order</button>
+        </div>)
+}
+
+function VerisonWatermark() {
+    const version = require('../package.json').version;
+
+    return (
+        <div className="versionWatermark">{version}</div>
+    )
 }
 
 const root = ReactDom.createRoot(document.getElementById("root"))
