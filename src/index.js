@@ -82,21 +82,32 @@ function Menu() {
     return (
         <main className="menu">
             <h2>Our menu</h2>
-            {numPizzas > 0 && <ul className="pizzas">
-                {pizzas.map(pizza => <Pizza pizza={pizza} key={pizza.id} />)}
-            </ul>}
+            {numPizzas > 0 ? (
+                <>
+                    <p>Authentic Italian cuisine. 6 creative dishes to choose from. Al from our stone oven, all organic, all delicious.</p>
+                    <ul className="pizzas">
+                        {pizzas.map((pizza) => (<Pizza pizza={pizza} key={pizza.name} />))}
+                    </ul>
+                </>
+            ) : (
+                <p>We're still working on our menu. Please come back later:)</p>
+            )}
         </main>
     );
 }
 
 function Pizza({ pizza }) {
     return (
-        <li className="pizza">
+        <li className={`pizza ${pizza.soldOut ? "sold-out" : ""}`}>
             <img src={pizza.photoName} alt={pizza.name}></img>
             <div>
                 <h3>{pizza.name}</h3>
                 <p>{pizza.ingredients}</p>
-                <span>Price: {pizza.price}€</span>
+                {pizza.soldOut ? (
+                    <span>SOLD OUT</span>
+                ) : (
+                    <span>{pizza.price}€</span>
+                )}
             </div>
         </li>
     );
@@ -110,12 +121,11 @@ function Footer() {
 
     return (
         <footer className="footer">
-            {isOpen ?
-                (<Order closeHour={closeHour} openHour={openHour} />
-                ) : (
-                    <p>We're happy to welcome you between {openHour}:00 and {closeHour}:00.</p>
-                )
-            }
+            {isOpen ? (
+                <Order closeHour={closeHour} openHour={openHour} />
+            ) : (
+                <p>We're happy to welcome you between {openHour}:00 and {closeHour}:00.</p>
+            )}
         </footer >
     );
 }
