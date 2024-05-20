@@ -84,19 +84,19 @@ function Menu() {
             <h2>Our menu</h2>
             {numPizzas > 0 && <ul className="pizzas">
                 {pizzas.map(pizza => <Pizza pizza={pizza} key={pizza.id} />)}
-            </ul>};
+            </ul>}
         </main>
     );
 }
 
-function Pizza(props) {
+function Pizza({ pizza }) {
     return (
         <li className="pizza">
-            <img src={props.pizza.photoName} alt={props.pizza.name}></img>
+            <img src={pizza.photoName} alt={pizza.name}></img>
             <div>
-                <h3>{props.pizza.name}</h3>
-                <p>{props.pizza.ingredients}</p>
-                <span>Price: {props.pizza.price}€</span>
+                <h3>{pizza.name}</h3>
+                <p>{pizza.ingredients}</p>
+                <span>Price: {pizza.price}€</span>
             </div>
         </li>
     );
@@ -111,7 +111,7 @@ function Footer() {
     return (
         <footer className="footer">
             {isOpen ?
-                (<Order closeHour={closeHour} />
+                (<Order closeHour={closeHour} openHour={openHour} />
                 ) : (
                     <p>We're happy to welcome you between {openHour}:00 and {closeHour}:00.</p>
                 )
@@ -120,12 +120,13 @@ function Footer() {
     );
 }
 
-function Order(props) {
+function Order({ openHour, closeHour }) {
     return (
         <div className="order">
-            <p>We're open until {props.closeHour}:00. Come visit us or order online.</p>
+            <p>We're open from {openHour}:00 to {closeHour}:00. Come visit us or order online.</p>
             <button className="btn">Order</button>
-        </div>)
+        </div>
+    );
 }
 
 function VerisonWatermark() {
@@ -133,7 +134,7 @@ function VerisonWatermark() {
 
     return (
         <div className="versionWatermark">{version}</div>
-    )
+    );
 }
 
 const root = ReactDom.createRoot(document.getElementById("root"))
