@@ -1,60 +1,7 @@
+import "./index.css";
 import React from "react";
 import ReactDom from "react-dom/client";
-import "./index.css";
-
-// TODO: Solve Warning
-// eslint-disable-next-line no-unused-vars
-const pizzaData = [
-    {
-        id: 0,
-        name: "Focaccia",
-        ingredients: "Bread with italian olive oil and rosemary.",
-        price: 6,
-        photoName: "pizzas/focaccia.jpg",
-        soldOut: false,
-    },
-    {
-        id: 1,
-        name: "Pizza Margherita",
-        ingredients: "Tomato and mozarella.",
-        price: 10,
-        photoName: "pizzas/margherita.jpg",
-        soldOut: false,
-    },
-    {
-        id: 2,
-        name: "Pizza Spinaci",
-        ingredients: "Tomato, mozarella, spinach and ricotta cheese.",
-        price: 12,
-        photoName: "pizzas/spinaci.jpg",
-        soldOut: false,
-    },
-    {
-        id: 3,
-        name: "Pizza Funghi",
-        ingredients: "Tomato, mozarella, mushrooms and onion.",
-        price: 12,
-        photoName: "pizzas/funghi.jpg",
-        soldOut: false,
-    },
-    {
-        id: 4,
-        name: "Pizza Salamino",
-        ingredients: "Tomato, mozarella and pepperoni.",
-        price: 15,
-        photoName: "pizzas/salamino.jpg",
-        soldOut: true,
-    },
-    {
-        id: 5,
-        name: "Pizza Prosciutto",
-        ingredients: "Tomato, mozarella, ham, aragula and burrata cheese.",
-        price: 18,
-        photoName: "pizzas/prosciutto.jpg",
-        soldOut: false,
-    },
-];
-
+import PizzaData from "./pizzaData.json";
 
 function App() {
     return (
@@ -76,7 +23,7 @@ function Header() {
 }
 
 function Menu() {
-    const pizzas = pizzaData;
+    const pizzas = PizzaData.pizzas;
     const numPizzas = pizzas.length;
 
     return (
@@ -90,7 +37,7 @@ function Menu() {
                     </ul>
                 </>
             ) : (
-                <p>We're still working on our menu. Please come back later:)</p>
+                <p>We're still working on our menu. Please come back later :)</p>
             )}
         </main>
     );
@@ -134,7 +81,7 @@ function Order({ openHour, closeHour }) {
     return (
         <div className="order">
             <p>We're open from {openHour}:00 to {closeHour}:00. Come visit us or order online.</p>
-            <button className="btn">Order</button>
+            <button className="btn" onClick={() => alert("We're still working on this feature. Please come back later :)")}>Order</button>
         </div>
     );
 }
