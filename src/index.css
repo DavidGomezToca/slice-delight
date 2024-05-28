@@ -23,7 +23,7 @@ body {
   background-color: #f7f2e9;
   border-bottom: 2rem solid #edc84b;
   min-height: 100vh;
-  padding: 3.2rem;
+  padding: 0 3.2rem 1rem;
 }
 
 .container {
@@ -36,17 +36,12 @@ body {
   gap: 3rem;
 }
 
-/* *************** */
-
 .header {
   align-self: stretch;
 }
 
 .header h1 {
-  /* Non-accessible color */
   color: #edc84b;
-  /* color: #af8602; */
-
   text-transform: uppercase;
   text-align: center;
   font-size: 5.2rem;
@@ -76,8 +71,6 @@ body {
   right: 0;
 }
 
-/* *************** */
-
 .menu {
   display: flex;
   flex-direction: column;
@@ -87,7 +80,7 @@ body {
 
 .menu h2 {
   display: inline-block;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   border-top: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   font-size: 2.4rem;
@@ -115,14 +108,14 @@ body {
   gap: 3.2rem;
 }
 
-.pizza img {
+.pizzaImg {
   width: 12rem;
   aspect-ratio: 1;
   align-self: start;
   border-radius: 30px;
 }
 
-.pizza div {
+.pizzaDiv {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -141,7 +134,7 @@ body {
   margin-bottom: auto;
 }
 
-.pizza span {
+.pizzaSpan {
   display: block;
   font-size: 1.6rem;
 }
@@ -155,7 +148,25 @@ body {
   opacity: 0.8;
 }
 
-/* *************** */
+.orderButtons {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.orderButton {
+  width: 25px;
+}
+
+.orderButtonDisabled {
+  filter: grayscale();
+  opacity: 0.8;
+}
+
+.orderCantity {
+  font-size: 20px;
+  margin: 0 5px;
+}
 
 .footer {
   font-size: 1.4rem;
@@ -178,10 +189,24 @@ body {
   padding: 1.4rem 3.2rem;
   cursor: pointer;
   transition: all 0.2s;
+  border-radius: 10px;
 }
 
 .btn:hover {
   background-color: #e9bb24;
+}
+
+.swal-text {
+  font-size: 18px !important;
+}
+
+.swal-icon {
+  width: 70px;
+  height: 70px;
+}
+
+.swal-popup {
+  font-size: 12px !important;
 }
 
 .versionWatermark {
@@ -192,11 +217,3 @@ body {
   font-size: 15px;
   color: rgba(0, 0, 0, 0.5);
 }
-
-/*
-SPACING SYSTEM (px)
-2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128
-
-FONT SIZE SYSTEM (px)
-10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 /52 / 62 / 74 / 86 / 98
-*/
