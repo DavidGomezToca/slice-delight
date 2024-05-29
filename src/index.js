@@ -1,9 +1,8 @@
 import "./index.css";
-import React, { useState } from "react";
 import Swal from "sweetalert2";
+import React, { useState } from "react";
 import ReactDom from "react-dom/client";
 import PizzaData from "./pizzaData.json";
-
 
 function App() {
     const initialOrder = new Array(PizzaData.pizzas.length);
@@ -63,7 +62,7 @@ function Pizza({ pizza, order }) {
                 ) : (
                     <>
                         <div className="orderButtons">
-                            <img className={`orderButton ${order.order[pizza.id][2] === 0 ? "orderButtonDisabled" : ""}`} src="ui/minus_button.png" alt="Minus Button" onClick={() => UpdateCantityOrder(pizza.id, -1, order)}></img>
+                            <img className={`orderButton asd ${order.order[pizza.id][2] === 0 ? "orderButtonDisabled" : ""}`} src="ui/minus_button.png" alt="Minus Button" onClick={() => UpdateCantityOrder(pizza.id, -1, order)}></img>
                             <span className="orderCantity">{order.order[pizza.id][2]}</span>
                             <img className="orderButton" src="ui/plus_button.png" alt="Plus Button" onClick={() => UpdateCantityOrder(pizza.id, 1, order)}></img>
                         </div>
@@ -128,10 +127,10 @@ function Order({ openHour, closeHour, order }) {
                         cancelButtonColor: "#d33",
                         confirmButtonText: "Confirm order",
                         customClass: {
-                            htmlContainer: "swal-text",
-                            confirmButton: "swal-text",
-                            cancelButton: "swal-text",
-                            popup: "swal-popup"
+                            htmlContainer: "swal2-text",
+                            confirmButton: "swal2-text",
+                            cancelButton: "swal2-text",
+                            popup: "swal2-popup"
                         }
                     }).then((result) => {
                         if (result.isConfirmed) {
@@ -140,8 +139,9 @@ function Order({ openHour, closeHour, order }) {
                                 text: "Your order will soon be ready.",
                                 icon: "success",
                                 customClass: {
-                                    htmlContainer: "swal-text",
-                                    popup: "swal-popup"
+                                    htmlContainer: "swal2-text",
+                                    popup: "swal2-popup",
+                                    confirmButton: "swal2-text"
                                 }
                             });
                         }
@@ -150,9 +150,9 @@ function Order({ openHour, closeHour, order }) {
                     Swal.fire({
                         title: "Your order is empty.", html: "", icon: "info",
                         customClass: {
-                            htmlContainer: "swal-text",
-                            confirmButton: "swal-text",
-                            popup: "swal-popup"
+                            htmlContainer: "swal2-text",
+                            confirmButton: "swal2-text",
+                            popup: "swal2-popup"
                         }
                     });
                 }
