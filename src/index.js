@@ -22,21 +22,22 @@ function App() {
 }
 
 function Header() {
+    let appName = require('../package.json').name;
+    appName = appName.split("-")[0] + " " + appName.split("-")[1];
     return (
         <header className="header">
-            <h1>SLICE DELIGHT</h1>
+            <h1>{appName}</h1>
         </header>
     );
 }
 
 function Menu(order) {
     const pizzas = PizzaData.pizzas;
-    const numPizzas = pizzas.length;
 
     return (
         <main className="menu">
             <h2>Our menu</h2>
-            {numPizzas > 0 ? (
+            {pizzas.length > 0 ? (
                 <>
                     <p>Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious.</p>
                     <ul className="pizzas">
@@ -62,7 +63,7 @@ function Pizza({ pizza, order }) {
                 ) : (
                     <>
                         <div className="orderButtons">
-                            <img className={`orderButton asd ${order.order[pizza.id][2] === 0 ? "orderButtonDisabled" : ""}`} src="ui/minus_button.png" alt="Minus Button" onClick={() => UpdateCantityOrder(pizza.id, -1, order)}></img>
+                            <img className={`orderButton ${order.order[pizza.id][2] === 0 ? "orderButtonDisabled" : ""}`} src="ui/minus_button.png" alt="Minus Button" onClick={() => UpdateCantityOrder(pizza.id, -1, order)}></img>
                             <span className="orderCantity">{order.order[pizza.id][2]}</span>
                             <img className="orderButton" src="ui/plus_button.png" alt="Plus Button" onClick={() => UpdateCantityOrder(pizza.id, 1, order)}></img>
                         </div>
@@ -86,38 +87,40 @@ function UpdateCantityOrder(id, value, order) {
 }
 
 function Footer(order) {
-    const hour = new Date().getHours();
-    const openHour = 12;
-    const closeHour = 22;
-    const isOpen = hour >= openHour && hour <= closeHour;
-
     return (
         <footer className="footer">
-            {isOpen ? (
-                <Order closeHour={closeHour} openHour={openHour} order={order} />
-            ) : (
-                <p>We're happy to welcome you between {openHour}:00 and {closeHour}:00.</p>
-            )}
+            <Order order={order} />
         </footer >
     );
 }
 
-function Order({ openHour, closeHour, order }) {
+function Order({ order }) {
+    const currentHour = new Date().getHours();
+    const startOffer = 12;
+    const endOffer = 20;
+    const offerActive = currentHour >= startOffer && currentHour <= endOffer;
 
     return (
         <div className="order">
-            <p>We're open from {openHour}:00 to {closeHour}:00. Come visit us or order online.</p>
+            <p>From {startOffer}:00 to {endOffer}:00. Profit of 20% discount.</p>
             <button className="btn" onClick={() => {
                 let htmlOrder = "";
-                let totalPriceInt = 0;
+                let totalPrice = 0;
                 order.order.forEach(element => {
                     if (element[2] > 0) {
                         htmlOrder = htmlOrder + "<p>" + element[0] + ": " + element[2] + "</p>"
-                        totalPriceInt += (element[1] * element[2]);
+                        totalPrice += (element[1] * element[2]);
                     }
                 });
-                if (totalPriceInt > 0) {
-                    const htmlTotalPrice = "Total price: " + totalPriceInt + "€";
+                if (totalPrice > 0) {
+                    let htmlTotalPrice = "";
+                    if (offerActive) {
+                        totalPrice *= 0.8;
+                        totalPrice = Number(totalPrice.toFixed(2));
+                        htmlTotalPrice = "Special Offer -20%: " + totalPrice + "€";
+                    }
+                    else
+                        htmlTotalPrice = "Total price: " + totalPrice + "€";
                     Swal.fire({
                         title: htmlTotalPrice,
                         html: htmlOrder,
