@@ -1,38 +1,37 @@
-import "./index.css";
-import Swal from "sweetalert2";
-import React, { useState } from "react";
-import ReactDom from "react-dom/client";
-import PizzaData from "./pizzaData.json";
+import "./index.css"
+import Swal from "sweetalert2"
+import React, { useState } from "react"
+import ReactDom from "react-dom/client"
+import PizzaData from "./pizzaData.json"
 
 function App() {
-    const initialOrder = new Array(PizzaData.pizzas.length);
+    const initialOrder = new Array(PizzaData.pizzas.length)
     PizzaData.pizzas.forEach(element => {
-        initialOrder[element.id] = ([element.name, element.price, 0]);
-    });
-    const [order, setOrder] = useState(initialOrder);
+        initialOrder[element.id] = ([element.name, element.price, 0])
+    })
+    const [order, setOrder] = useState(initialOrder)
 
     return (
         <div className="container">
             <Header />
             <Menu order={order} setOrder={setOrder} />
             <Footer order={order} setOrder={setOrder} />
-            <VerisonWatermark />
         </div>
-    );
+    )
 }
 
 function Header() {
-    let appName = require('../package.json').name;
-    appName = appName.split("-")[0] + " " + appName.split("-")[1];
+    let appName = require("../package.json").name
+    appName = appName.split("-")[0] + " " + appName.split("-")[1]
     return (
         <header className="header">
             <h1>{appName}</h1>
         </header>
-    );
+    )
 }
 
 function Menu(order) {
-    const pizzas = PizzaData.pizzas;
+    const pizzas = PizzaData.pizzas
 
     return (
         <main className="menu">
@@ -48,7 +47,7 @@ function Menu(order) {
                 <p>We're still working on our menu. Please come back later :)</p>
             )}
         </main>
-    );
+    )
 }
 
 function Pizza({ pizza, order }) {
@@ -72,17 +71,17 @@ function Pizza({ pizza, order }) {
                 )}
             </div>
         </li >
-    );
+    )
 }
 
 function UpdateCantityOrder(id, value, order) {
     if (0 <= order.order[id][2] + value) {
         const newOrder = order.order.map((item, index) => {
             if (index === id)
-                return [...item.slice(0, 2), item[2] + value, ...item.slice(3)];
-            return [...item];
-        });
-        order.setOrder(newOrder);
+                return [...item.slice(0, 2), item[2] + value, ...item.slice(3)]
+            return [...item]
+        })
+        order.setOrder(newOrder)
     }
 }
 
@@ -91,36 +90,36 @@ function Footer(order) {
         <footer className="footer">
             <Order order={order} />
         </footer >
-    );
+    )
 }
 
 function Order({ order }) {
-    const currentHour = new Date().getHours();
-    const startOffer = 12;
-    const endOffer = 20;
-    const offerActive = currentHour >= startOffer && currentHour <= endOffer;
+    const currentHour = new Date().getHours()
+    const startOffer = 12
+    const endOffer = 20
+    const offerActive = currentHour >= startOffer && currentHour <= endOffer
 
     return (
         <div className="order">
             <p>From {startOffer}:00 to {endOffer}:00. Profit of 20% discount.</p>
             <button className="btn" onClick={() => {
-                let htmlOrder = "";
-                let totalPrice = 0;
+                let htmlOrder = ""
+                let totalPrice = 0
                 order.order.forEach(element => {
                     if (element[2] > 0) {
                         htmlOrder = htmlOrder + "<p>" + element[0] + ": " + element[2] + "</p>"
-                        totalPrice += (element[1] * element[2]);
+                        totalPrice += (element[1] * element[2])
                     }
-                });
+                })
                 if (totalPrice > 0) {
-                    let htmlTotalPrice = "";
+                    let htmlTotalPrice = ""
                     if (offerActive) {
-                        totalPrice *= 0.8;
-                        totalPrice = Number(totalPrice.toFixed(2));
-                        htmlTotalPrice = "Special Offer -20%: " + totalPrice + "€";
+                        totalPrice *= 0.8
+                        totalPrice = Number(totalPrice.toFixed(2))
+                        htmlTotalPrice = "Special Offer -20%: " + totalPrice + "€"
                     }
                     else
-                        htmlTotalPrice = "Total price: " + totalPrice + "€";
+                        htmlTotalPrice = "Total price: " + totalPrice + "€"
                     Swal.fire({
                         title: htmlTotalPrice,
                         html: htmlOrder,
@@ -146,7 +145,7 @@ function Order({ order }) {
                                     popup: "swal2-popup",
                                     confirmButton: "swal2-text"
                                 }
-                            });
+                            })
                         }
                     })
                 } else {
@@ -157,19 +156,11 @@ function Order({ order }) {
                             confirmButton: "swal2-text",
                             popup: "swal2-popup"
                         }
-                    });
+                    })
                 }
             }}>Order</button>
-        </div >
-    );
-}
-
-function VerisonWatermark() {
-    const version = require('../package.json').version;
-
-    return (
-        <div className="versionWatermark">{version}</div>
-    );
+        </div>
+    )
 }
 
 const root = ReactDom.createRoot(document.getElementById("root"))
@@ -177,4 +168,4 @@ root.render(
     <React.StrictMode>
         <App />
     </React.StrictMode>
-);
+) 
