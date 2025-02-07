@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap");
 
+:root {
+  --text: #252525;
+  --background: #f7f2e9;
+  --yellow: #edc84b;
+  --yellow--dark: #e9bb24;
+  --grey: #888;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -18,12 +26,12 @@ html::-webkit-scrollbar {
 
 body {
   font-family: "Roboto Mono", sans-serif;
-  color: #252525;
+  color: var(--text);
   font-weight: 400;
-  background-color: #f7f2e9;
-  border-bottom: 2rem solid #edc84b;
+  /* background-color: var(--background); */
+  border-bottom: 2rem solid var(--yellow);
   min-height: 100vh;
-  padding: 0 3.2rem 1rem;
+  padding: 1rem 3.2rem;
 }
 
 .container {
@@ -41,7 +49,7 @@ body {
 }
 
 .header h1 {
-  color: #edc84b;
+  color: var(--yellow);
   text-transform: uppercase;
   text-align: center;
   font-size: 5.2rem;
@@ -58,7 +66,7 @@ body {
   content: "";
   height: 3px;
   width: 8rem;
-  background-color: #edc84b;
+  background-color: var(--yellow);
   position: absolute;
   top: calc(50% - 1px);
 }
@@ -141,7 +149,7 @@ body {
 }
 
 .pizza.sold-out {
-  color: #888;
+  color: var(--grey);
 }
 
 .pizza.sold-out img {
@@ -198,7 +206,7 @@ body {
   border: none;
   font-size: 1.4rem;
   font-weight: 500;
-  background-color: #edc84b;
+  background-color: var(--yellow);
   padding: 1.4rem 3.2rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -206,7 +214,7 @@ body {
 }
 
 .btn:hover {
-  background-color: #e9bb24;
+  background-color: var(--yellow--dark);
 }
 
 .swal2-text {

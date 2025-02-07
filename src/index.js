@@ -4,11 +4,24 @@ import React, { useState } from "react"
 import ReactDom from "react-dom/client"
 import PizzaData from "./pizzaData.json"
 
+/**
+ * @component App.
+ * @returns {JSX.Element} - The App component.
+ */
 function App() {
+    /**
+     * Initial order list.
+     * @type {object}.
+     */
     const initialOrder = new Array(PizzaData.pizzas.length)
     PizzaData.pizzas.forEach(element => {
         initialOrder[element.id] = ([element.name, element.price, 0])
     })
+
+    /**
+     * Order list.
+     * @type {object, function}.
+     */
     const [order, setOrder] = useState(initialOrder)
 
     return (
@@ -20,9 +33,18 @@ function App() {
     )
 }
 
+/**
+ * @component Header.
+ * @returns {JSX.Element} - The Header component.
+ */
 function Header() {
+    /**
+     * App name.
+     * @type {string}.
+     */
     let appName = require("../package.json").name
     appName = appName.split("-")[0] + " " + appName.split("-")[1]
+
     return (
         <header className="header">
             <h1>{appName}</h1>
@@ -30,7 +52,16 @@ function Header() {
     )
 }
 
+/**
+ * @component Menu.
+ * @param {object} order - The order list.
+ * @returns {JSX.Element} - The Menu component.
+ */
 function Menu(order) {
+    /**
+     * Pizzas list.
+     * @type {object}.
+     */
     const pizzas = PizzaData.pizzas
 
     return (
@@ -39,9 +70,7 @@ function Menu(order) {
             {pizzas.length > 0 ? (
                 <>
                     <p>Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious.</p>
-                    <ul className="pizzas">
-                        {pizzas.map((pizza) => (<Pizza pizza={pizza} key={pizza.name} order={order} />))}
-                    </ul>
+                    <ul className="pizzas">{pizzas.map((pizza) => (<Pizza pizza={pizza} key={pizza.name} order={order} />))}</ul>
                 </>
             ) : (
                 <p>We're still working on our menu. Please come back later :)</p>
@@ -50,6 +79,12 @@ function Menu(order) {
     )
 }
 
+/**
+ * @component Pizza.
+ * @param {object} pizza - The pizza.
+ * @param {object} order - The order list.
+ * @returns {JSX.Element} - The Pizza component.
+ */
 function Pizza({ pizza, order }) {
     return (
         <li className={`pizza ${pizza.soldOut ? "sold-out" : ""}`}>
@@ -70,33 +105,72 @@ function Pizza({ pizza, order }) {
                     </>
                 )}
             </div>
-        </li >
+        </li>
     )
 }
 
+/**
+ * Update the cantity of a pizza in the order list.
+ * @param {number} id - The ID of the pizza.
+ * @param {number} value - The value to add or subtract.
+ * @param {object} order - The order list.
+ */
 function UpdateCantityOrder(id, value, order) {
+    // Avoid negative quantities.
     if (0 <= order.order[id][2] + value) {
         const newOrder = order.order.map((item, index) => {
+            // Update the quantity of the pizza.
             if (index === id)
                 return [...item.slice(0, 2), item[2] + value, ...item.slice(3)]
             return [...item]
         })
+        // Update the order list.
         order.setOrder(newOrder)
     }
 }
 
+/**
+ * @component Footer.
+ * @param {object} order - The order list.
+ * @returns {JSX.Element} - The Footer component.
+ */
 function Footer(order) {
     return (
         <footer className="footer">
             <Order order={order} />
-        </footer >
+        </footer>
     )
 }
 
+
+/**
+ * @component Order.
+ * @param {object} order - The order list.
+ * @returns {JSX.Element} - The Order component.
+ */
 function Order({ order }) {
+    /**
+     * Current hour.
+     * @type {number}.
+     */
     const currentHour = new Date().getHours()
+
+    /**
+     * Start hour of the offer.
+     * @type {number}.
+     */
     const startOffer = 12
+
+    /**
+     * End hour of the offer.
+     * @type {number}.
+     */
     const endOffer = 20
+
+    /**
+     * Check if the offer is active.
+     * @type {boolean}.
+     */
     const offerActive = currentHour >= startOffer && currentHour <= endOffer
 
     return (
@@ -163,6 +237,12 @@ function Order({ order }) {
     )
 }
 
+/**
+ * Entry point of the application.
+ * - Renders the main App component to the root DOM element.
+ * - Wraps the App component in React.StrictMode to enable additional checks and warnings.
+ * @function render
+ */
 const root = ReactDom.createRoot(document.getElementById("root"))
 root.render(
     <React.StrictMode>
