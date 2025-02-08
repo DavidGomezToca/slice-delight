@@ -16,7 +16,7 @@
 
 - **STACK :**
 
-  - **Slice Delight** : `1.6.0`
+  - **Slice Delight** : `1.7.0`
   - **React** : `18.3.1`
   - **React Dom** : `18.3.1`
   - **SweetAlert2** : `11.11.0`
@@ -27,3 +27,4 @@
 
   - **Author : [David Gómez](https://github.com/DavidGomezToca)**
   - **UI : [Icons8](https://iconos8.es/)**
+  - **Icons : [Font Awesome](https://fontawesome.com)**
