@@ -1,0 +1,82 @@
+{
+  "pizzas": [
+    {
+      "id": 0,
+      "name": "Focaccia",
+      "ingredients": {
+        "ES": "Pan con aceite de oliva italiano y romero.",
+        "FR": "Pain à l'huile d'olive italienne et romarin.",
+        "EN": "Bread with italian olive oil and rosemary.",
+        "PT": "Pão com azeite de oliva italiano e alecrim."
+      },
+      "price": 6,
+      "photoName": "pizzas/focaccia.jpg",
+      "soldOut": false
+    },
+    {
+      "id": 1,
+      "name": "Pizza Margherita",
+      "ingredients": {
+        "ES": "Pan con aceite de oliva italiano y romero.",
+        "FR": "Pain à l'huile d'olive italienne et romarin.",
+        "EN": "Tomato and mozarella.",
+        "PT": "Pão com azeite de oliva italiano e alecrim."
+      },
+      "price": 10,
+      "photoName": "pizzas/margherita.jpg",
+      "soldOut": false
+    },
+    {
+      "id": 2,
+      "name": "Pizza Spinaci",
+      "ingredients": {
+        "ES": "Pan con aceite de oliva italiano y romero.",
+        "FR": "Pain à l'huile d'olive italienne et romarin.",
+        "EN": "Tomato, mozarella, spinach and ricotta cheese.",
+        "PT": "Pão com azeite de oliva italiano e alecrim."
+      },
+      "price": 12,
+      "photoName": "pizzas/spinaci.jpg",
+      "soldOut": true
+    },
+    {
+      "id": 3,
+      "name": "Pizza Funghi",
+      "ingredients": {
+        "ES": "Pan con aceite de oliva italiano y romero.",
+        "FR": "Pain à l'huile d'olive italienne et romarin.",
+        "EN": "Tomato, mozarella, mushrooms and onion.",
+        "PT": "Pão com azeite de oliva italiano e alecrim."
+      },
+      "price": 12,
+      "photoName": "pizzas/funghi.jpg",
+      "soldOut": false
+    },
+    {
+      "id": 4,
+      "name": "Pizza Salamino",
+      "ingredients": {
+        "ES": "Pan con aceite de oliva italiano y romero.",
+        "FR": "Pain à l'huile d'olive italienne et romarin.",
+        "EN": "Tomato, mozarella and pepperoni.",
+        "PT": "Pão com azeite de oliva italiano e alecrim."
+      },
+      "price": 15,
+      "photoName": "pizzas/salamino.jpg",
+      "soldOut": true
+    },
+    {
+      "id": 5,
+      "name": "Pizza Prosciutto",
+      "ingredients": {
+        "ES": "Pan con aceite de oliva italiano y romero.",
+        "FR": "Pain à l'huile d'olive italienne et romarin.",
+        "EN": "Tomato, mozarella, ham, aragula and burrata cheese.",
+        "PT": "Pão com azeite de oliva italiano e alecrim."
+      },
+      "price": 18,
+      "photoName": "pizzas/prosciutto.jpg",
+      "soldOut": false
+    }
+  ]
+}

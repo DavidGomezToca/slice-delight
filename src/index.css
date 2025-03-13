@@ -230,6 +230,20 @@ body {
   font-size: 12px !important;
 }
 
+.language-flag {
+  position: fixed;
+  top: 2rem;
+  right: 4rem;
+  width: 8rem;
+  height: 5rem;
+  border: solid var(--grey) 4px;
+  border-radius: 10px;
+}
+
+.language-flag:hover {
+  cursor: pointer;
+}
+
 .social-media {
   display: flex;
   justify-content: center;
@@ -310,5 +324,12 @@ body {
 
   .swal2-popup {
     font-size: 10px !important;
+  }
+
+  .language-flag {
+    top: 6rem;
+    right: 2rem;
+    width: 6rem;
+    height: 4rem;
   }
 }

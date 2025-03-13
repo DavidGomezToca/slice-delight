@@ -1,15 +1,29 @@
 import "./index.css"
 import Swal from "sweetalert2"
-import React, { useState } from "react"
 import ReactDom from "react-dom/client"
-import PizzaData from "./pizzaData.json"
+import PizzaData from "./data/pizzaData.json"
+import AppProviders from "./providers/AppProviders"
+import React, { useState, useContext } from "react"
 import SocialMediaData from "./data/socialMediaData.json"
+import { TranslationsContext } from "./contexts/TranslationsContext"
 
 /**
  * @component App.
  * @returns {JSX.Element} - The App component.
  */
 function App() {
+    /**
+     * Translations context.
+     * @type {{object}}.
+     */
+    const { language, translations, changeLanguage } = useContext(TranslationsContext)
+
+    /**
+     * Texts translated.
+     * @type {object}.
+     */
+    const texts = translations
+
     /**
      * Initial order list.
      * @type {object}.
@@ -28,8 +42,8 @@ function App() {
     return (
         <div className="container">
             <Header />
-            <Menu order={order} setOrder={setOrder} />
-            <Footer order={order} setOrder={setOrder} />
+            <Menu texts={texts} language={language} order={order} setOrder={setOrder} />
+            <Footer texts={texts} order={order} language={language} changeLanguage={changeLanguage} />
         </div>
     )
 }
@@ -55,10 +69,13 @@ function Header() {
 
 /**
  * @component Menu.
+ * @param {object} texts - The texts translated.
+ * @param {string} language - The language.
  * @param {object} order - The order list.
+ * @param {function} setOrder - Updates the order list.
  * @returns {JSX.Element} - The Menu component.
  */
-function Menu(order) {
+function Menu({ texts, language, order, setOrder }) {
     /**
      * Pizzas list.
      * @type {object}.
@@ -67,14 +84,14 @@ function Menu(order) {
 
     return (
         <main className="menu">
-            <h2>Our menu</h2>
+            <h2>{texts[0]}</h2>
             {pizzas.length > 0 ? (
                 <>
-                    <p>Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious.</p>
-                    <ul className="pizzas">{pizzas.map((pizza) => (<Pizza pizza={pizza} key={pizza.name} order={order} />))}</ul>
+                    <p>{texts[1]}</p>
+                    <ul className="pizzas">{pizzas.map((pizza) => (<Pizza texts={texts} language={language} pizza={pizza} key={pizza.name} order={order} setOrder={setOrder} />))}</ul>
                 </>
             ) : (
-                <p>We're still working on our menu. Please come back later :)</p>
+                <p>{texts[2]}</p>
             )}
         </main>
     )
@@ -82,25 +99,28 @@ function Menu(order) {
 
 /**
  * @component Pizza.
+ * @param {object} texts - The texts translated.
+ * @param {string} language - The language.
  * @param {object} pizza - The pizza.
  * @param {object} order - The order list.
+ * @param {function} setOrder - Updates the order list.
  * @returns {JSX.Element} - The Pizza component.
  */
-function Pizza({ pizza, order }) {
+function Pizza({ texts, language, pizza, order, setOrder }) {
     return (
         <li className={`pizza ${pizza.soldOut ? "sold-out" : ""}`}>
             <img className="pizzaImg" src={pizza.photoName} alt={pizza.name}></img>
             <div className="pizzaDiv">
                 <h3>{pizza.name}</h3>
-                <p>{pizza.ingredients}</p>
+                <p>{pizza.ingredients[language]}</p>
                 {pizza.soldOut ? (
-                    <span>SOLD OUT</span>
+                    <span>{texts[3]}</span>
                 ) : (
                     <>
                         <div className="orderButtons">
-                            <img className={`orderButton ${order.order[pizza.id][2] === 0 ? "orderButtonDisabled" : ""}`} src="ui/minus_button.png" alt="Minus Button" onClick={() => UpdateCantityOrder(pizza.id, -1, order)}></img>
-                            <span className="orderCantity">{order.order[pizza.id][2]}</span>
-                            <img className="orderButton" src="ui/plus_button.png" alt="Plus Button" onClick={() => UpdateCantityOrder(pizza.id, 1, order)}></img>
+                            <img className={`orderButton ${order[pizza.id][2] === 0 ? "orderButtonDisabled" : ""}`} src="ui/minus_button.png" alt="Minus Button" onClick={() => UpdateCantityOrder(pizza.id, -1, order, setOrder)}></img>
+                            <span className="orderCantity">{order[pizza.id][2]}</span>
+                            <img className="orderButton" src="ui/plus_button.png" alt="Plus Button" onClick={() => UpdateCantityOrder(pizza.id, 1, order, setOrder)}></img>
                         </div>
                         <span className="pizzaSpan">{pizza.price}€</span>
                     </>
@@ -115,30 +135,35 @@ function Pizza({ pizza, order }) {
  * @param {number} id - The ID of the pizza.
  * @param {number} value - The value to add or subtract.
  * @param {object} order - The order list.
+ * @param {function} setOrder - Updates the order list.
  */
-function UpdateCantityOrder(id, value, order) {
+function UpdateCantityOrder(id, value, order, setOrder) {
     // Avoid negative quantities.
-    if (0 <= order.order[id][2] + value) {
-        const newOrder = order.order.map((item, index) => {
+    if (0 <= order[id][2] + value) {
+        const newOrder = order.map((item, index) => {
             // Update the quantity of the pizza.
             if (index === id)
                 return [...item.slice(0, 2), item[2] + value, ...item.slice(3)]
             return [...item]
         })
         // Update the order list.
-        order.setOrder(newOrder)
+        setOrder(newOrder)
     }
 }
 
 /**
  * @component Footer.
+ * @param {object} texts - The texts translated.
+ * @param {string} language - The language.
+ * @param {function} changeLanguage - Changes the language.
  * @param {object} order - The order list.
  * @returns {JSX.Element} - The Footer component.
  */
-function Footer(order) {
+function Footer({ texts, language, changeLanguage, order }) {
     return (
         <footer className="footer">
-            <Order order={order} />
+            <Order texts={texts} order={order} />
+            <LanguageFlag language={language} changeLanguage={changeLanguage} />
             <SocialMedia />
         </footer>
     )
@@ -147,10 +172,11 @@ function Footer(order) {
 
 /**
  * @component Order.
+ * @param {object} texts - The texts translated.
  * @param {object} order - The order list.
  * @returns {JSX.Element} - The Order component.
  */
-function Order({ order }) {
+function Order({ texts, order }) {
     /**
      * Current hour.
      * @type {number}.
@@ -177,11 +203,11 @@ function Order({ order }) {
 
     return (
         <div className="order">
-            <p>From {startOffer}:00 to {endOffer}:00. Profit of 20% discount.</p>
+            <p>{texts[4]} {startOffer}:00 {texts[5]} {endOffer}:00. {texts[6]}</p>
             <button className="btn" onClick={() => {
                 let htmlOrder = ""
                 let totalPrice = 0
-                order.order.forEach(element => {
+                order.forEach(element => {
                     if (element[2] > 0) {
                         htmlOrder = htmlOrder + "<p>" + element[0] + ": " + element[2] + "</p>"
                         totalPrice += (element[1] * element[2])
@@ -192,10 +218,10 @@ function Order({ order }) {
                     if (offerActive) {
                         totalPrice *= 0.8
                         totalPrice = Number(totalPrice.toFixed(2))
-                        htmlTotalPrice = "Special Offer -20%: " + totalPrice + "€"
+                        htmlTotalPrice = texts[7] + totalPrice + "€"
                     }
                     else
-                        htmlTotalPrice = "Total price: " + totalPrice + "€"
+                        htmlTotalPrice = texts[8] + totalPrice + "€"
                     Swal.fire({
                         title: htmlTotalPrice,
                         html: htmlOrder,
@@ -203,7 +229,8 @@ function Order({ order }) {
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
-                        confirmButtonText: "Confirm order",
+                        confirmButtonText: texts[9],
+                        cancelButtonText: texts[10],
                         customClass: {
                             htmlContainer: "swal2-text",
                             confirmButton: "swal2-text",
@@ -213,8 +240,8 @@ function Order({ order }) {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             Swal.fire({
-                                title: "Order confirmed",
-                                text: "Your order will soon be ready.",
+                                title: texts[11],
+                                text: texts[12],
                                 icon: "success",
                                 customClass: {
                                     htmlContainer: "swal2-text",
@@ -226,7 +253,7 @@ function Order({ order }) {
                     })
                 } else {
                     Swal.fire({
-                        title: "Your order is empty.", html: "", icon: "info",
+                        title: texts[13], html: "", icon: "info",
                         customClass: {
                             htmlContainer: "swal2-text",
                             confirmButton: "swal2-text",
@@ -234,8 +261,20 @@ function Order({ order }) {
                         }
                     })
                 }
-            }}>Order</button>
+            }}>{texts[14]}</button>
         </div>
+    )
+}
+
+/**
+ * @component LanguageFlag.
+ * @param {string} language - The language.
+ * @param {function} changeLanguage - Changes the language.
+ * @returns {JSX.Element} - The Footer component.
+ */
+function LanguageFlag({ language, changeLanguage }) {
+    return (
+        <img className="language-flag" src={`flags/${language}.png`} alt={`Language Flag ${language}`} onClick={() => changeLanguage()} />
     )
 }
 
@@ -282,6 +321,8 @@ function SocialMedia() {
 const root = ReactDom.createRoot(document.getElementById("root"))
 root.render(
     <React.StrictMode>
-        <App />
+        <AppProviders>
+            <App />
+        </AppProviders>
     </React.StrictMode>
 )
