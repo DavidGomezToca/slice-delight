@@ -39,11 +39,25 @@ function App() {
      */
     const [order, setOrder] = useState(initialOrder)
 
+
+    /**
+     * Resets the order.
+     */
+    function resetOrder() {
+        setOrder(() => {
+            const newOrder = new Array(PizzaData.pizzas.length)
+            PizzaData.pizzas.forEach(element => {
+                newOrder[element.id] = [element.name, element.price, 0]
+            })
+            return newOrder
+        })
+    }
+
     return (
         <div className="container">
             <Header />
             <Menu texts={texts} language={language} order={order} setOrder={setOrder} />
-            <Footer texts={texts} order={order} language={language} changeLanguage={changeLanguage} />
+            <Footer texts={texts} order={order} language={language} changeLanguage={changeLanguage} resetOrder={resetOrder} />
         </div>
     )
 }
@@ -157,12 +171,13 @@ function UpdateCantityOrder(id, value, order, setOrder) {
  * @param {string} language - The language.
  * @param {function} changeLanguage - Changes the language.
  * @param {object} order - The order list.
+ * @param {object} resetOrder - Resets the order.
  * @returns {JSX.Element} - The Footer component.
  */
-function Footer({ texts, language, changeLanguage, order }) {
+function Footer({ texts, language, changeLanguage, order, resetOrder }) {
     return (
         <footer className="footer">
-            <Order texts={texts} order={order} />
+            <Order texts={texts} order={order} resetOrder={resetOrder} />
             <LanguageFlag language={language} changeLanguage={changeLanguage} />
             <SocialMedia />
         </footer>
@@ -174,9 +189,10 @@ function Footer({ texts, language, changeLanguage, order }) {
  * @component Order.
  * @param {object} texts - The texts translated.
  * @param {object} order - The order list.
+ * @param {object} resetOrder - Resets the order.
  * @returns {JSX.Element} - The Order component.
  */
-function Order({ texts, order }) {
+function Order({ texts, order, resetOrder }) {
     /**
      * Current hour.
      * @type {number}.
@@ -249,6 +265,7 @@ function Order({ texts, order }) {
                                     confirmButton: "swal2-text"
                                 }
                             })
+                            resetOrder()
                         }
                     })
                 } else {
